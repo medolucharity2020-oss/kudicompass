@@ -251,21 +251,6 @@ main {
   color: var(--accent-emerald);
 }
 
-.tab-chip {
-  display: none;
-  font-size: 0.72rem;
-  font-weight: 600;
-  padding: 2px 7px;
-  border-radius: var(--radius-pill);
-  background: rgba(0, 0, 0, 0.06);
-  color: inherit;
-}
-
-.tab-btn.active .tab-chip {
-  display: inline-block;
-  background: rgba(16, 185, 129, 0.25);
-  color: #a7f3d0;
-}
 
 /* Tab Panels */
 .tab-panel {
@@ -310,67 +295,6 @@ h2 {
   line-height: 1.45;
 }
 
-/* ----- PRESETS BAR ----- */
-.presets-bar {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  gap: 8px;
-  padding: 10px 14px;
-  background: var(--surface-alt);
-  border: 1px solid var(--border);
-  border-radius: var(--radius-md);
-  margin-bottom: 22px;
-}
-
-.presets-label {
-  font-size: 0.78rem;
-  font-weight: 600;
-  text-transform: uppercase;
-  letter-spacing: 0.04em;
-  color: var(--text-muted);
-}
-
-.presets-buttons {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 8px;
-}
-
-.preset-pill {
-  display: inline-flex;
-  align-items: center;
-  gap: 6px;
-  font-family: inherit;
-  font-size: 0.82rem;
-  font-weight: 600;
-  color: var(--primary-800);
-  background: #ffffff;
-  border: 1px solid var(--border);
-  padding: 6px 12px;
-  border-radius: var(--radius-pill);
-  cursor: pointer;
-  transition: var(--transition);
-  box-shadow: var(--shadow-sm);
-}
-
-.preset-pill:hover {
-  background: var(--primary-50);
-  border-color: var(--primary-100);
-  color: var(--primary-900);
-  transform: translateY(-1px);
-}
-
-.pill-dot {
-  width: 7px;
-  height: 7px;
-  border-radius: 50%;
-  background: var(--accent-emerald);
-}
-
-.pill-dot.fee {
-  background: var(--accent-gold);
-}
 
 /* ----- FORM FIELDS & INPUTS ----- */
 .field {
@@ -479,6 +403,69 @@ input[type="number"]::-webkit-inner-spin-button {
 }
 input[type="number"] {
   -moz-appearance: textfield;
+}
+
+/* ----- METHOD SELECTOR ----- */
+.method-selector {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+}
+
+.method-option {
+  margin: 0;
+  cursor: pointer;
+}
+
+.method-option input[type="radio"] {
+  position: absolute;
+  opacity: 0;
+  width: 0;
+  height: 0;
+  pointer-events: none;
+}
+
+.method-pill {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  padding: 12px 14px;
+  background: var(--surface-alt);
+  border: 1.5px solid var(--border);
+  border-radius: var(--radius-md);
+  transition: var(--transition);
+}
+
+.method-option:hover .method-pill {
+  border-color: #cbd5e1;
+  background: #ffffff;
+}
+
+.method-option input[type="radio"]:focus-visible + .method-pill {
+  box-shadow: 0 0 0 4px rgba(16, 185, 129, 0.15);
+  border-color: var(--border-focus);
+}
+
+.method-option input[type="radio"]:checked + .method-pill {
+  background: var(--primary-50);
+  border-color: var(--primary-700);
+  box-shadow: 0 2px 8px rgba(10, 61, 46, 0.08);
+}
+
+.method-name {
+  font-size: 0.9rem;
+  font-weight: 700;
+  color: var(--text-main);
+}
+
+.method-option input[type="radio"]:checked + .method-pill .method-name {
+  color: var(--primary-900);
+}
+
+.method-hint {
+  font-size: 0.76rem;
+  font-weight: 500;
+  color: var(--text-muted);
 }
 
 /* ----- ACCORDION (Fees) ----- */
@@ -974,55 +961,6 @@ th:first-child, td:first-child {
   border-radius: var(--radius-pill);
 }
 
-/* ----- METHOD NOTES & TIPS ----- */
-.method-card {
-  margin-top: 26px;
-  padding: 18px 20px;
-  background: var(--surface-alt);
-  border: 1px solid var(--border);
-  border-radius: var(--radius-md);
-  display: flex;
-  gap: 14px;
-}
-
-.method-icon {
-  flex-shrink: 0;
-  width: 36px;
-  height: 36px;
-  border-radius: 50%;
-  background: var(--primary-50);
-  color: var(--primary-700);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.method-content h4 {
-  font-size: 0.95rem;
-  font-weight: 700;
-  color: var(--primary-900);
-  margin-bottom: 8px;
-}
-
-.method-content ul {
-  padding-left: 18px;
-  font-size: 0.84rem;
-  color: var(--text-body);
-  line-height: 1.5;
-}
-
-.method-content li {
-  margin-bottom: 6px;
-}
-
-.source-footnote {
-  font-size: 0.78rem;
-  color: var(--text-muted);
-  line-height: 1.5;
-  margin-top: 20px;
-  padding-top: 14px;
-  border-top: 1px dashed var(--border);
-}
 
 /* Savings Tip */
 .savings-tip {
@@ -1064,12 +1002,6 @@ footer {
   font-size: 0.78rem;
 }
 
-/* ----- RESPONSIVE ADAPTATIONS ----- */
-@media (min-width: 600px) {
-  .tab-chip {
-    display: inline-block;
-  }
-}
 
 @media (max-width: 480px) {
   header {
@@ -1096,6 +1028,10 @@ footer {
   .two-inputs {
     grid-template-columns: 1fr;
     gap: 0;
+  }
+
+  .method-selector {
+    grid-template-columns: 1fr;
   }
 
   .stats-grid {

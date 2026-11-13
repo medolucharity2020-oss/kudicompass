@@ -1,417 +1,583 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <meta name="theme-color" content="#0a3d2e" />
-  <title>Kudi Compass — Smart Loan & Savings Calculator in Naira</title>
-  
-  <!-- Modern Typography: Plus Jakarta Sans -->
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
-  
-  <link rel="stylesheet" href="style.css" />
-</head>
-<body>
-  <!-- App Background Decor -->
-  <div class="bg-glow"></div>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="theme-color" content="#0a3d2e" />
+    <title>Kudi Compass — Smart Loan & Savings Calculator in Naira</title>
 
-  <!-- Header -->
-  <header>
-    <div class="header-inner">
-      <div class="brand">
-        <div class="brand-icon">
-          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-            <polygon points="12 2 19 21 12 17 5 21 12 2"></polygon>
-          </svg>
-        </div>
-        <span class="brand-name">Kudi Compass</span>
-        <span class="brand-badge">NGN ₦</span>
-      </div>
+    <!-- Modern Typography: Plus Jakarta Sans -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap"
+      rel="stylesheet"
+    />
 
-      <h1>Know your money before you move it.</h1>
-      <p class="sub">Intelligent reducing-balance loan & savings calculator for Nigeria</p>
-    </div>
-  </header>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <!-- App Background Decor -->
+    <div class="bg-glow"></div>
 
-  <main>
-    <!-- Segmented Tab Navigation -->
-    <div class="tab-nav-wrapper">
-      <div class="tab-list" role="tablist" aria-label="Financial tools">
-        <button id="tabBtnLoan" class="tab-btn active" role="tab" aria-selected="true" aria-controls="panelLoan" tabindex="0">
-          <svg class="tab-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
-            <rect x="2" y="5" width="20" height="14" rx="2"></rect>
-            <line x1="2" y1="10" x2="22" y2="10"></line>
-            <circle cx="7" cy="15" r="1"></circle>
-          </svg>
-          <span class="tab-label">Loan Calculator</span>
-          <span class="tab-chip">Reducing balance</span>
-        </button>
-
-        <button id="tabBtnSavings" class="tab-btn" role="tab" aria-selected="false" aria-controls="panelSavings" tabindex="-1">
-          <svg class="tab-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
-            <path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z"></path>
-          </svg>
-          <span class="tab-label">Savings Planner</span>
-          <span class="tab-chip">Growth</span>
-        </button>
-      </div>
-    </div>
-
-    <!-- ===== TAB PANEL: LOAN ===== -->
-    <section id="panelLoan" class="tab-panel active" role="tabpanel" aria-labelledby="tabBtnLoan">
-      <div class="card">
-        <div class="card-header">
-          <div>
-            <h2>Loan Repayment Calculator</h2>
-            <p class="card-desc">Calculate fair monthly repayments using the reducing-balance method used by Nigerian commercial banks.</p>
-          </div>
-        </div>
-
-        <!-- Presets / Quick Examples -->
-        <div class="presets-bar">
-          <span class="presets-label">Popular examples:</span>
-          <div class="presets-buttons">
-            <button id="exampleZenith" type="button" class="preset-pill" title="Load Zenith Bank 27% MSME loan example">
-              <span class="pill-dot"></span> Zenith MSME (27%)
-            </button>
-            <button id="exampleAccess" type="button" class="preset-pill" title="Load Access Bank 20% Mama loan with 2% fees">
-              <span class="pill-dot fee"></span> Access Mama (20% + Fees)
-            </button>
-          </div>
-        </div>
-
-        <form id="loanForm" onsubmit="return false;" novalidate>
-          <!-- Primary Loan Inputs -->
-          <div class="field">
-            <label for="loanAmount">Loan amount</label>
-            <div class="input-wrapper">
-              <span class="input-affix prefix">₦</span>
-              <input id="loanAmount" type="number" inputmode="numeric" placeholder="1,000,000" step="any" required />
-            </div>
-          </div>
-
-          <div class="two-inputs">
-            <div class="field">
-              <label for="loanRate">Interest rate per year</label>
-              <div class="input-wrapper">
-                <input id="loanRate" type="number" inputmode="decimal" placeholder="27" step="any" required />
-                <span class="input-affix suffix">% p.a.</span>
-              </div>
-            </div>
-
-            <div class="field">
-              <label for="loanMonths">Repayment period</label>
-              <div class="input-wrapper">
-                <input id="loanMonths" type="number" inputmode="numeric" placeholder="12" step="1" min="1" required />
-                <span class="input-affix suffix">months</span>
-              </div>
-            </div>
-          </div>
-
-          <!-- Optional Fees Accordion / Section -->
-          <details class="accordion">
-            <summary class="accordion-summary">
-              <span class="accordion-title">
-                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                  <circle cx="12" cy="12" r="10"></circle>
-                  <line x1="12" y1="8" x2="12" y2="12"></line>
-                  <line x1="12" y1="16" x2="12.01" y2="16"></line>
-                </svg>
-                Hidden bank fees (optional)
-              </span>
-              <span class="accordion-hint">Upfront deductions</span>
-            </summary>
-            
-            <div class="accordion-body">
-              <p class="accordion-desc">Many lenders charge one-off upfront deductions. Enter them to see the true cash you receive.</p>
-              <div class="two-inputs">
-                <div class="field">
-                  <label for="feeMgmt">Management fee (%)</label>
-                  <div class="input-wrapper">
-                    <input id="feeMgmt" type="number" inputmode="decimal" placeholder="0" step="any" />
-                    <span class="input-affix suffix">%</span>
-                  </div>
-                </div>
-
-                <div class="field">
-                  <label for="feeInsurance">Insurance charge (%)</label>
-                  <div class="input-wrapper">
-                    <input id="feeInsurance" type="number" inputmode="decimal" placeholder="0" step="any" />
-                    <span class="input-affix suffix">%</span>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </details>
-
-          <!-- Pocket Check Feature -->
-          <div class="pocket-input-group">
-            <div class="field">
-              <div class="label-with-badge">
-                <label for="income">Your monthly income (optional)</label>
-                <span class="feature-tag">Pocket Check™</span>
-              </div>
-              <div class="input-wrapper">
-                <span class="input-affix prefix">₦</span>
-                <input id="income" type="number" inputmode="numeric" placeholder="300,000" step="any" />
-              </div>
-              <p class="field-hint">Checks affordability against healthy debt-to-income benchmarks (30% rule).</p>
-            </div>
-          </div>
-
-          <p id="loanError" class="error" role="alert"></p>
-
-          <div class="action-buttons">
-            <button id="loanBtn" type="button" class="btn btn-primary">
-              <span>Calculate Repayments</span>
-              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
-                <line x1="5" y1="12" x2="19" y2="12"></line>
-                <polyline points="12 5 19 12 12 19"></polyline>
-              </svg>
-            </button>
-          </div>
-        </form>
-
-        <!-- Loan Results View -->
-        <div id="loanResult" class="results" hidden>
-          <div class="results-header">
-            <h3>Calculated Loan Breakdown</h3>
-            <span class="results-badge">Reducing Balance</span>
-          </div>
-
-          <!-- Hero Monthly Card -->
-          <div class="hero-card">
-            <div class="hero-top">
-              <span class="hero-label">Estimated Monthly Payment</span>
-              <span class="hero-badge">Fixed Per Month</span>
-            </div>
-            <strong id="outMonthly" class="hero-value">₦0</strong>
-            <p class="hero-subtext">Principal repayment + declining monthly interest</p>
-          </div>
-
-          <!-- Key Metrics Grid -->
-          <div class="stats-grid">
-            <div class="stat-card">
-              <span class="stat-label">Total Repayment</span>
-              <strong id="outTotal" class="stat-value">₦0</strong>
-              <span class="stat-sub">Principal + all interest</span>
-            </div>
-            <div class="stat-card">
-              <span class="stat-label">Total Interest Cost</span>
-              <strong id="outInterest" class="stat-value accent">₦0</strong>
-              <span class="stat-sub">Cost of borrowing</span>
-            </div>
-          </div>
-
-          <!-- Hidden Fees Callout (Conditional) -->
-          <div id="feeBox" class="fee-box" hidden>
-            <div class="fee-box-header">
-              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                <circle cx="12" cy="12" r="10"></circle>
-                <line x1="12" y1="16" x2="12" y2="12"></line>
-                <line x1="12" y1="8" x2="12.01" y2="8"></line>
-              </svg>
-              <strong>Upfront Fee Impact</strong>
-            </div>
-            <div class="fee-rows">
-              <div class="fee-row">
-                <span>Deducted fees upfront:</span>
-                <strong id="outFees">₦0</strong>
-              </div>
-              <div class="fee-row highlight">
-                <span>Cash you actually receive:</span>
-                <strong id="outReceive">₦0</strong>
-              </div>
-              <div class="fee-row">
-                <span>True cost of borrowing (Interest + Fees):</span>
-                <strong id="outTrueCost">₦0</strong>
-              </div>
-            </div>
-          </div>
-
-          <!-- Pocket Check Meter (Conditional) -->
-          <div id="pocketBox" class="pocket-card" hidden>
-            <div class="pocket-header">
-              <div class="pocket-title-wrap">
-                <span class="pocket-title">Pocket Check™ Affordability</span>
-                <span id="pocketBadge" class="status-pill">Analysis</span>
-              </div>
-            </div>
-            <p id="pocketText" class="pocket-msg"></p>
-            <div class="progress-track" aria-hidden="true">
-              <div id="pocketFill" class="progress-bar"></div>
-            </div>
-            <div class="pocket-scale">
-              <span>0%</span>
-              <span>Comfortable (≤30%)</span>
-              <span>Tight (31-40%)</span>
-              <span>Risky (>40%)</span>
-            </div>
-          </div>
-
-          <!-- Schedule Table -->
-          <div class="schedule-section">
-            <div class="schedule-header">
-              <h4>Amortisation Schedule</h4>
-              <span class="schedule-count">Month-by-month details</span>
-            </div>
-            <div class="table-wrap">
-              <table>
-                <thead>
-                  <tr>
-                    <th>Month</th>
-                    <th>Interest Paid</th>
-                    <th>Principal Paid</th>
-                    <th>Remaining Balance</th>
-                  </tr>
-                </thead>
-                <tbody id="scheduleBody"></tbody>
-              </table>
-            </div>
-          </div>
-        </div>
-
-        <!-- Educational / Method Notes -->
-        <div class="method-card">
-          <div class="method-icon">
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-              <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path>
+    <!-- Header -->
+    <header>
+      <div class="header-inner">
+        <div class="brand">
+          <div class="brand-icon">
+            <svg
+              width="22"
+              height="22"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2.5"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            >
+              <polygon points="12 2 19 21 12 17 5 21 12 2"></polygon>
             </svg>
           </div>
-          <div class="method-content">
-            <h4>Why Reducing Balance Matters</h4>
-            <ul>
-              <li><strong>Fairer calculation:</strong> Interest is calculated only on the remaining balance you still owe, decreasing every month as you pay down principal.</li>
-              <li><strong>Major savings:</strong> A ₦1,000,000 loan at 27% for 12 months costs <strong>₦152,209</strong> on reducing balance, compared to <strong>₦270,000</strong> if charged with a misleading flat rate.</li>
-              <li><strong>Industry standard:</strong> This is the transparent method regulated for Nigerian commercial banks.</li>
-            </ul>
-          </div>
+          <span class="brand-name">Kudi Compass</span>
+          <span class="brand-badge">NGN ₦</span>
         </div>
 
-        <p class="source-footnote">
-          <strong>Market reference:</strong> Zenith MSME baseline (27% p.a., Nairametrics Nigerian Bank Lending Analysis). Access Bank "One Mama" baseline (20% interest + 1% management & 1% insurance charges, National Daily). Rates vary; confirm exact charges with your financial institution.
-        </p>
+        <h1>Know your money before you move it.</h1>
+        <p class="sub">Intelligent loan & savings calculator in Naira</p>
       </div>
-    </section>
+    </header>
 
-    <!-- ===== TAB PANEL: SAVINGS ===== -->
-    <section id="panelSavings" class="tab-panel" role="tabpanel" aria-labelledby="tabBtnSavings" hidden>
-      <div class="card">
-        <div class="card-header">
-          <div>
-            <h2>Disciplined Savings Planner</h2>
-            <p class="card-desc">Project your wealth accumulation and see the real impact of recurring maintenance fees and charges.</p>
-          </div>
+    <main>
+      <!-- Segmented Tab Navigation -->
+      <div class="tab-nav-wrapper">
+        <div class="tab-list" role="tablist" aria-label="Financial tools">
+          <button
+            id="tabBtnLoan"
+            class="tab-btn active"
+            role="tab"
+            aria-selected="true"
+            aria-controls="panelLoan"
+            tabindex="0"
+          >
+            <svg
+              class="tab-icon"
+              width="18"
+              height="18"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2.2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            >
+              <rect x="2" y="5" width="20" height="14" rx="2"></rect>
+              <line x1="2" y1="10" x2="22" y2="10"></line>
+              <circle cx="7" cy="15" r="1"></circle>
+            </svg>
+            <span class="tab-label">Loan Calculator</span>
+          </button>
+
+          <button
+            id="tabBtnSavings"
+            class="tab-btn"
+            role="tab"
+            aria-selected="false"
+            aria-controls="panelSavings"
+            tabindex="-1"
+          >
+            <svg
+              class="tab-icon"
+              width="18"
+              height="18"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2.2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            >
+              <line x1="3" y1="22" x2="21" y2="22"></line>
+              <line x1="6" y1="18" x2="6" y2="11"></line>
+              <line x1="10" y1="18" x2="10" y2="11"></line>
+              <line x1="14" y1="18" x2="14" y2="11"></line>
+              <line x1="18" y1="18" x2="18" y2="11"></line>
+              <polygon points="12 2 20 7 4 7 12 2"></polygon>
+            </svg>
+            <span class="tab-label">Savings Planner</span>
+          </button>
         </div>
+      </div>
 
-        <!-- Presets -->
-        <div class="presets-bar">
-          <span class="presets-label">Quick preset:</span>
-          <div class="presets-buttons">
-            <button id="saveExample" type="button" class="preset-pill">
-              <span class="pill-dot"></span> ₦50,000/month for 1 Year
-            </button>
-          </div>
-        </div>
-
-        <form id="savingsForm" onsubmit="return false;" novalidate>
-          <div class="field">
-            <label for="saveAmount">Monthly deposit target</label>
-            <div class="input-wrapper">
-              <span class="input-affix prefix">₦</span>
-              <input id="saveAmount" type="number" inputmode="numeric" placeholder="50,000" step="any" required />
+      <!-- ===== TAB PANEL: LOAN ===== -->
+      <section
+        id="panelLoan"
+        class="tab-panel active"
+        role="tabpanel"
+        aria-labelledby="tabBtnLoan"
+      >
+        <div class="card">
+          <div class="card-header">
+            <div>
+              <h2>Loan Repayment Calculator</h2>
+              <p class="card-desc">
+                Calculate your monthly repayments, interest costs, and schedule.
+              </p>
             </div>
           </div>
 
-          <div class="two-inputs">
+          <form id="loanForm" onsubmit="return false;" novalidate>
+            <!-- Primary Loan Inputs -->
             <div class="field">
-              <label for="saveMonths">Savings duration</label>
-              <div class="input-wrapper">
-                <input id="saveMonths" type="number" inputmode="numeric" placeholder="12" step="1" min="1" required />
-                <span class="input-affix suffix">months</span>
-              </div>
-            </div>
-
-            <div class="field">
-              <label for="saveCharge">Monthly bank fee / SMS charge</label>
+              <label for="loanAmount">Loan amount</label>
               <div class="input-wrapper">
                 <span class="input-affix prefix">₦</span>
-                <input id="saveCharge" type="number" inputmode="numeric" placeholder="0" step="any" />
+                <input
+                  id="loanAmount"
+                  type="number"
+                  inputmode="numeric"
+                  placeholder="1,000,000"
+                  step="any"
+                  required
+                />
+              </div>
+            </div>
+
+            <div class="two-inputs">
+              <div class="field">
+                <label for="loanRate">Interest rate per year</label>
+                <div class="input-wrapper">
+                  <input
+                    id="loanRate"
+                    type="number"
+                    inputmode="decimal"
+                    placeholder="20"
+                    step="any"
+                    required
+                  />
+                  <span class="input-affix suffix">% p.a.</span>
+                </div>
+              </div>
+
+              <div class="field">
+                <label for="loanMonths">Repayment period</label>
+                <div class="input-wrapper">
+                  <input
+                    id="loanMonths"
+                    type="number"
+                    inputmode="numeric"
+                    placeholder="12"
+                    step="1"
+                    min="1"
+                    required
+                  />
+                  <span class="input-affix suffix">months</span>
+                </div>
+              </div>
+            </div>
+
+            <!-- Interest Calculation Method Selector -->
+            <div class="field">
+              <label>Interest calculation method</label>
+              <div class="method-selector" role="radiogroup" aria-label="Interest calculation method">
+                <label class="method-option">
+                  <input type="radio" name="interestMethod" value="reducing" checked />
+                  <span class="method-pill">
+                    <span class="method-name">Reducing Balance</span>
+                    <span class="method-hint">Interest on remaining balance</span>
+                  </span>
+                </label>
+                <label class="method-option">
+                  <input type="radio" name="interestMethod" value="flat" />
+                  <span class="method-pill">
+                    <span class="method-name">Flat Rate</span>
+                    <span class="method-hint">Interest on original amount</span>
+                  </span>
+                </label>
+              </div>
+            </div>
+
+            <!-- Optional Fees Accordion / Section -->
+            <details class="accordion">
+              <summary class="accordion-summary">
+                <span class="accordion-title">
+                  <svg
+                    width="16"
+                    height="16"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="2"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                  >
+                    <circle cx="12" cy="12" r="10"></circle>
+                    <line x1="12" y1="8" x2="12" y2="12"></line>
+                    <line x1="12" y1="16" x2="12.01" y2="16"></line>
+                  </svg>
+                  Hidden bank fees (optional)
+                </span>
+                <span class="accordion-hint">Upfront deductions</span>
+              </summary>
+
+              <div class="accordion-body">
+                <p class="accordion-desc">
+                  Many lenders charge one-off upfront deductions. Enter them to
+                  see the true cash you receive.
+                </p>
+                <div class="two-inputs">
+                  <div class="field">
+                    <label for="feeMgmt">Management fee (%)</label>
+                    <div class="input-wrapper">
+                      <input
+                        id="feeMgmt"
+                        type="number"
+                        inputmode="decimal"
+                        placeholder="0"
+                        step="any"
+                      />
+                      <span class="input-affix suffix">%</span>
+                    </div>
+                  </div>
+
+                  <div class="field">
+                    <label for="feeInsurance">Insurance charge (%)</label>
+                    <div class="input-wrapper">
+                      <input
+                        id="feeInsurance"
+                        type="number"
+                        inputmode="decimal"
+                        placeholder="0"
+                        step="any"
+                      />
+                      <span class="input-affix suffix">%</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </details>
+
+            <!-- Pocket Check Feature -->
+            <div class="pocket-input-group">
+              <div class="field">
+                <div class="label-with-badge">
+                  <label for="income">Your monthly income (optional)</label>
+                  <span class="feature-tag">Pocket Check™</span>
+                </div>
+                <div class="input-wrapper">
+                  <span class="input-affix prefix">₦</span>
+                  <input
+                    id="income"
+                    type="number"
+                    inputmode="numeric"
+                    placeholder="300,000"
+                    step="any"
+                  />
+                </div>
+                <p class="field-hint">
+                  Checks affordability against healthy debt-to-income benchmarks
+                  (30% rule).
+                </p>
+              </div>
+            </div>
+
+            <p id="loanError" class="error" role="alert"></p>
+
+            <div class="action-buttons">
+              <button id="loanBtn" type="button" class="btn btn-primary">
+                <span>Calculate Repayments</span>
+                <svg
+                  width="18"
+                  height="18"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2.2"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                >
+                  <line x1="5" y1="12" x2="19" y2="12"></line>
+                  <polyline points="12 5 19 12 12 19"></polyline>
+                </svg>
+              </button>
+            </div>
+          </form>
+
+          <!-- Loan Results View -->
+          <div id="loanResult" class="results" hidden>
+            <div class="results-header">
+              <h3>Calculated Loan Breakdown</h3>
+              <span id="loanMethodBadge" class="results-badge">Reducing Balance</span>
+            </div>
+
+            <!-- Hero Monthly Card -->
+            <div class="hero-card">
+              <div class="hero-top">
+                <span class="hero-label">Estimated Monthly Payment</span>
+                <span class="hero-badge">Fixed Per Month</span>
+              </div>
+              <strong id="outMonthly" class="hero-value">₦0</strong>
+              <p class="hero-subtext">Principal repayment + monthly interest</p>
+            </div>
+
+            <!-- Key Metrics Grid -->
+            <div class="stats-grid">
+              <div class="stat-card">
+                <span class="stat-label">Total Repayment</span>
+                <strong id="outTotal" class="stat-value">₦0</strong>
+                <span class="stat-sub">Principal + all interest</span>
+              </div>
+              <div class="stat-card">
+                <span class="stat-label">Total Interest Cost</span>
+                <strong id="outInterest" class="stat-value accent">₦0</strong>
+                <span class="stat-sub">Cost of borrowing</span>
+              </div>
+            </div>
+
+            <!-- Hidden Fees Callout (Conditional) -->
+            <div id="feeBox" class="fee-box" hidden>
+              <div class="fee-box-header">
+                <svg
+                  width="18"
+                  height="18"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                >
+                  <circle cx="12" cy="12" r="10"></circle>
+                  <line x1="12" y1="16" x2="12" y2="12"></line>
+                  <line x1="12" y1="8" x2="12.01" y2="8"></line>
+                </svg>
+                <strong>Upfront Fee Impact</strong>
+              </div>
+              <div class="fee-rows">
+                <div class="fee-row">
+                  <span>Deducted fees upfront:</span>
+                  <strong id="outFees">₦0</strong>
+                </div>
+                <div class="fee-row highlight">
+                  <span>Cash you actually receive:</span>
+                  <strong id="outReceive">₦0</strong>
+                </div>
+                <div class="fee-row">
+                  <span>True cost of borrowing (Interest + Fees):</span>
+                  <strong id="outTrueCost">₦0</strong>
+                </div>
+              </div>
+            </div>
+
+            <!-- Pocket Check Meter (Conditional) -->
+            <div id="pocketBox" class="pocket-card" hidden>
+              <div class="pocket-header">
+                <div class="pocket-title-wrap">
+                  <span class="pocket-title">Pocket Check™ Affordability</span>
+                  <span id="pocketBadge" class="status-pill">Analysis</span>
+                </div>
+              </div>
+              <p id="pocketText" class="pocket-msg"></p>
+              <div class="progress-track" aria-hidden="true">
+                <div id="pocketFill" class="progress-bar"></div>
+              </div>
+              <div class="pocket-scale">
+                <span>0%</span>
+                <span>Comfortable (≤30%)</span>
+                <span>Tight (31-40%)</span>
+                <span>Risky (>40%)</span>
+              </div>
+            </div>
+
+            <!-- Schedule Table -->
+            <div class="schedule-section">
+              <div class="schedule-header">
+                <h4>Amortisation Schedule</h4>
+                <span class="schedule-count">Month-by-month details</span>
+              </div>
+              <div class="table-wrap">
+                <table>
+                  <thead>
+                    <tr>
+                      <th>Month</th>
+                      <th>Interest Paid</th>
+                      <th>Principal Paid</th>
+                      <th>Remaining Balance</th>
+                    </tr>
+                  </thead>
+                  <tbody id="scheduleBody"></tbody>
+                </table>
               </div>
             </div>
           </div>
+        </div>
+      </section>
 
-          <p id="saveError" class="error" role="alert"></p>
-
-          <div class="action-buttons">
-            <button id="saveBtn" type="button" class="btn btn-primary">
-              <span>Calculate Savings</span>
-              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
-                <line x1="5" y1="12" x2="19" y2="12"></line>
-                <polyline points="12 5 19 12 12 19"></polyline>
-              </svg>
-            </button>
-          </div>
-        </form>
-
-        <!-- Savings Results View -->
-        <div id="saveResult" class="results" hidden>
-          <div class="results-header">
-            <h3>Projected Savings Outcome</h3>
-            <span class="results-badge success">Target Plan</span>
-          </div>
-
-          <!-- Hero Total Saved Card -->
-          <div class="hero-card savings-hero">
-            <div class="hero-top">
-              <span id="saveLabel" class="hero-label">Net Accumulated Savings</span>
-              <span class="hero-badge gold">Net Balance</span>
-            </div>
-            <strong id="outSaved" class="hero-value">₦0</strong>
-            <p class="hero-subtext">Total deposits minus all recurring bank charges</p>
-          </div>
-
-          <!-- Key Metrics Grid -->
-          <div class="stats-grid">
-            <div class="stat-card">
-              <span class="stat-label">Total Cash Deposited</span>
-              <strong id="outPaidIn" class="stat-value">₦0</strong>
-              <span class="stat-sub">Gross contributions</span>
-            </div>
-            <div class="stat-card">
-              <span class="stat-label">Total Account Charges</span>
-              <strong id="outCharges" class="stat-value warning">₦0</strong>
-              <span class="stat-sub">Deducted bank fees</span>
+      <!-- ===== TAB PANEL: SAVINGS ===== -->
+      <section
+        id="panelSavings"
+        class="tab-panel"
+        role="tabpanel"
+        aria-labelledby="tabBtnSavings"
+        hidden
+      >
+        <div class="card">
+          <div class="card-header">
+            <div>
+              <h2>Disciplined Savings Planner</h2>
+              <p class="card-desc">
+                Project your wealth accumulation and see the real impact of
+                recurring maintenance fees and charges.
+              </p>
             </div>
           </div>
 
-          <!-- Savings Tip Card -->
-          <div class="savings-tip">
-            <div class="tip-icon">
-              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                <circle cx="12" cy="12" r="10"></circle>
-                <path d="M12 16v-4"></path>
-                <path d="M12 8h.01"></path>
-              </svg>
+          <form id="savingsForm" onsubmit="return false;" novalidate>
+            <div class="field">
+              <label for="saveAmount">Monthly deposit target</label>
+              <div class="input-wrapper">
+                <span class="input-affix prefix">₦</span>
+                <input
+                  id="saveAmount"
+                  type="number"
+                  inputmode="numeric"
+                  placeholder="50,000"
+                  step="any"
+                  required
+                />
+              </div>
             </div>
-            <div class="tip-text">
-              <strong>Smart Saver Tip:</strong> Ensure your savings account offers interest that exceeds inflation and monthly account maintenance charges to preserve your purchasing power.
+
+            <div class="two-inputs">
+              <div class="field">
+                <label for="saveMonths">Savings duration</label>
+                <div class="input-wrapper">
+                  <input
+                    id="saveMonths"
+                    type="number"
+                    inputmode="numeric"
+                    placeholder="12"
+                    step="1"
+                    min="1"
+                    required
+                  />
+                  <span class="input-affix suffix">months</span>
+                </div>
+              </div>
+
+              <div class="field">
+                <label for="saveCharge">Monthly bank fee / SMS charge</label>
+                <div class="input-wrapper">
+                  <span class="input-affix prefix">₦</span>
+                  <input
+                    id="saveCharge"
+                    type="number"
+                    inputmode="numeric"
+                    placeholder="0"
+                    step="any"
+                  />
+                </div>
+              </div>
+            </div>
+
+            <p id="saveError" class="error" role="alert"></p>
+
+            <div class="action-buttons">
+              <button id="saveBtn" type="button" class="btn btn-primary">
+                <span>Calculate Savings</span>
+                <svg
+                  width="18"
+                  height="18"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2.2"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                >
+                  <line x1="5" y1="12" x2="19" y2="12"></line>
+                  <polyline points="12 5 19 12 12 19"></polyline>
+                </svg>
+              </button>
+            </div>
+          </form>
+
+          <!-- Savings Results View -->
+          <div id="saveResult" class="results" hidden>
+            <div class="results-header">
+              <h3>Projected Savings Outcome</h3>
+              <span class="results-badge success">Target Plan</span>
+            </div>
+
+            <!-- Hero Total Saved Card -->
+            <div class="hero-card savings-hero">
+              <div class="hero-top">
+                <span id="saveLabel" class="hero-label"
+                  >Net Accumulated Savings</span
+                >
+                <span class="hero-badge gold">Net Balance</span>
+              </div>
+              <strong id="outSaved" class="hero-value">₦0</strong>
+              <p class="hero-subtext">
+                Total deposits minus all recurring bank charges
+              </p>
+            </div>
+
+            <!-- Key Metrics Grid -->
+            <div class="stats-grid">
+              <div class="stat-card">
+                <span class="stat-label">Total Cash Deposited</span>
+                <strong id="outPaidIn" class="stat-value">₦0</strong>
+                <span class="stat-sub">Gross contributions</span>
+              </div>
+              <div class="stat-card">
+                <span class="stat-label">Total Account Charges</span>
+                <strong id="outCharges" class="stat-value warning">₦0</strong>
+                <span class="stat-sub">Deducted bank fees</span>
+              </div>
+            </div>
+
+            <!-- Savings Tip Card -->
+            <div class="savings-tip">
+              <div class="tip-icon">
+                <svg
+                  width="20"
+                  height="20"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                >
+                  <circle cx="12" cy="12" r="10"></circle>
+                  <path d="M12 16v-4"></path>
+                  <path d="M12 8h.01"></path>
+                </svg>
+              </div>
+              <div class="tip-text">
+                <strong>Smart Saver Tip:</strong> Ensure your savings account
+                offers interest that exceeds inflation and monthly account
+                maintenance charges to preserve your purchasing power.
+              </div>
             </div>
           </div>
         </div>
+      </section>
+    </main>
+
+    <footer>
+      <div class="footer-inner">
+        <p>
+          Estimates are for planning purposes. Lender charges, insurance, and
+          interest terms vary based on creditworthiness.
+        </p>
+        <p class="footer-sub">
+          Crafted for Nigerian financial clarity • Data is saved locally in your
+          browser.
+        </p>
       </div>
-    </section>
-  </main>
+    </footer>
 
-  <footer>
-    <div class="footer-inner">
-      <p>Estimates are for planning purposes. Lender charges, insurance, and interest terms vary based on creditworthiness.</p>
-      <p class="footer-sub">Crafted for Nigerian financial clarity • Data is saved locally in your browser.</p>
-    </div>
-  </footer>
-
-  <script src="script.js"></script>
-</body>
+    <script src="script.js"></script>
+  </body>
 </html>

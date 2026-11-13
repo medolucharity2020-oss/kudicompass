@@ -2,7 +2,7 @@
 // Kudi Compass: Loan & Savings Calculator
 // Section 1: Helpers & Storage
 // Section 2: Navigation & Tabs
-// Section 3: Loan Logic (Reducing Balance)
+// Section 3: Loan Logic
 // Section 4: Savings Logic
 // Section 5: Buttons & Keyboard Shortcuts
 // Section 6: Initialization
@@ -103,16 +103,28 @@ if (tabLoanBtn && tabSavingsBtn) {
   });
 }
 
-// ---------- 3. LOAN (REDUCING BALANCE) ----------
+// ---------- 3. LOAN LOGIC ----------
+
+function getInterestMethod() {
+  const selected = document.querySelector('input[name="interestMethod"]:checked');
+  return selected ? selected.value : "reducing";
+}
 
 // Pure math function:
 // monthlyRate is a decimal: 27% a year = 0.27 / 12 = 0.0225 a month
-function loanMaths(amount, monthlyRate, months) {
+function loanMaths(amount, monthlyRate, months, method = "reducing") {
+  if (method === "flat") {
+    const interest = amount * monthlyRate * months;
+    const total = amount + interest;
+    const payment = total / months;
+    return { payment, total, interest };
+  }
+
   let payment;
   if (monthlyRate === 0) {
     payment = amount / months; // no interest: just split evenly
   } else {
-    // Amortisation (reducing-balance) formula
+    // Amortisation formula
     payment = (amount * monthlyRate) / (1 - Math.pow(1 + monthlyRate, -months));
   }
   const total = payment * months;      // total repayment
@@ -146,9 +158,25 @@ function pocketCheck(payment, income) {
 }
 
 // Builds one row for every month
-function buildSchedule(amount, monthlyRate, months, payment) {
+function buildSchedule(amount, monthlyRate, months, payment, method = "reducing") {
   const rows = [];
   let balance = amount;
+
+  if (method === "flat") {
+    const monthlyInterest = amount * monthlyRate;
+    const monthlyPrincipal = amount / months;
+
+    for (let month = 1; month <= months; month++) {
+      balance = balance - monthlyPrincipal;
+      rows.push({
+        month,
+        interest: monthlyInterest,
+        principal: monthlyPrincipal,
+        balance: Math.max(balance, 0)
+      });
+    }
+    return rows;
+  }
 
   for (let month = 1; month <= months; month++) {
     const interest = balance * monthlyRate;
@@ -171,6 +199,7 @@ function calculateLoan() {
   const mgmtPct = Number(el("feeMgmt").value);
   const insurancePct = Number(el("feeInsurance").value);
   const income = Number(el("income").value);
+  const method = getInterestMethod();
 
   // Validation
   if (amount <= 0 || months <= 0 || el("loanRate").value === "" || yearlyRate < 0) {
@@ -181,7 +210,12 @@ function calculateLoan() {
   el("loanError").textContent = "";
 
   const monthlyRate = yearlyRate / 100 / 12;
-  const result = loanMaths(amount, monthlyRate, months);
+  const result = loanMaths(amount, monthlyRate, months, method);
+
+  const methodBadge = el("loanMethodBadge");
+  if (methodBadge) {
+    methodBadge.textContent = method === "flat" ? "Flat Rate" : "Reducing Balance";
+  }
 
   // Main results
   el("outMonthly").textContent = naira(result.payment);
@@ -215,7 +249,7 @@ function calculateLoan() {
   }
 
   // Repayment schedule table
-  const rows = buildSchedule(amount, monthlyRate, months, result.payment);
+  const rows = buildSchedule(amount, monthlyRate, months, result.payment, method);
   let html = "";
   rows.forEach(function (row) {
     html += `<tr>
@@ -232,7 +266,7 @@ function calculateLoan() {
 
   saveToStorage("kudiLoan", {
     amount, yearlyRate, months,
-    mgmtPct, insurancePct, income
+    mgmtPct, insurancePct, income, method
   });
 }
 
@@ -266,33 +300,16 @@ function calculateSavings() {
 
 // ---------- 5. BUTTONS & KEYBOARD SHORTCUTS ----------
 
-el("loanBtn").addEventListener("click", calculateLoan);
-el("saveBtn").addEventListener("click", calculateSavings);
+if (el("loanBtn")) el("loanBtn").addEventListener("click", calculateLoan);
+if (el("saveBtn")) el("saveBtn").addEventListener("click", calculateSavings);
 
-// Quick Presets
-el("exampleZenith").addEventListener("click", function () {
-  el("loanAmount").value = 1000000;
-  el("loanRate").value = 27;
-  el("loanMonths").value = 12;
-  el("feeMgmt").value = "";
-  el("feeInsurance").value = "";
-  calculateLoan();
-});
-
-el("exampleAccess").addEventListener("click", function () {
-  el("loanAmount").value = 500000;
-  el("loanRate").value = 20;
-  el("loanMonths").value = 12;
-  el("feeMgmt").value = 1;
-  el("feeInsurance").value = 1;
-  calculateLoan();
-});
-
-el("saveExample").addEventListener("click", function () {
-  el("saveAmount").value = 50000;
-  el("saveMonths").value = 12;
-  el("saveCharge").value = 100;
-  calculateSavings();
+// Recalculate automatically when switching interest method if inputs are already filled
+document.querySelectorAll('input[name="interestMethod"]').forEach((radio) => {
+  radio.addEventListener("change", () => {
+    if (!el("loanResult").hidden) {
+      calculateLoan();
+    }
+  });
 });
 
 // Enable 'Enter' key submission inside inputs
@@ -331,6 +348,10 @@ window.addEventListener("DOMContentLoaded", () => {
     el("feeMgmt").value = savedLoan.mgmtPct || "";
     el("feeInsurance").value = savedLoan.insurancePct || "";
     el("income").value = savedLoan.income || "";
+    if (savedLoan.method) {
+      const radio = document.querySelector(`input[name="interestMethod"][value="${savedLoan.method}"]`);
+      if (radio) radio.checked = true;
+    }
     if (savedLoan.amount && savedLoan.yearlyRate && savedLoan.months) {
       calculateLoan();
     }
