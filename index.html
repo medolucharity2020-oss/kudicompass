@@ -126,6 +126,31 @@
           </div>
 
           <form id="loanForm" onsubmit="return false;" novalidate>
+            <!-- Interest Calculation Method -->
+            <div class="field">
+              <label for="interestMethod">Interest calculation method</label>
+              <div class="input-wrapper select-wrapper">
+                <select id="interestMethod">
+                  <option value="reducing">Reducing Balance (interest on remaining balance)</option>
+                  <option value="flat">Flat Rate (interest on original amount)</option>
+                </select>
+                <svg
+                  class="select-chevron"
+                  width="18"
+                  height="18"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2.2"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  aria-hidden="true"
+                >
+                  <polyline points="6 9 12 15 18 9"></polyline>
+                </svg>
+              </div>
+            </div>
+
             <!-- Primary Loan Inputs -->
             <div class="field">
               <label for="loanAmount">Loan amount</label>
@@ -172,27 +197,6 @@
                   />
                   <span class="input-affix suffix">months</span>
                 </div>
-              </div>
-            </div>
-
-            <!-- Interest Calculation Method Selector -->
-            <div class="field">
-              <label>Interest calculation method</label>
-              <div class="method-selector" role="radiogroup" aria-label="Interest calculation method">
-                <label class="method-option">
-                  <input type="radio" name="interestMethod" value="reducing" checked />
-                  <span class="method-pill">
-                    <span class="method-name">Reducing Balance</span>
-                    <span class="method-hint">Interest on remaining balance</span>
-                  </span>
-                </label>
-                <label class="method-option">
-                  <input type="radio" name="interestMethod" value="flat" />
-                  <span class="method-pill">
-                    <span class="method-name">Flat Rate</span>
-                    <span class="method-hint">Interest on original amount</span>
-                  </span>
-                </label>
               </div>
             </div>
 

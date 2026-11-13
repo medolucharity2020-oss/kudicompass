@@ -56,9 +56,3 @@ Note: `localStorage` is scoped to each origin, so data saved locally will not ca
 - Savings planner projects contributions minus recurring charges without compound interest.
 - Pocket Check™ evaluates only the single loan entered, using 30% as a general rule of thumb.
 
-## Ideas for next steps
-
-- Late-payment penalty input
-- Compound interest option for savings
-- Chart comparing principal vs interest
-- Progressive Web App (PWA) support for offline mobile installation

@@ -106,8 +106,8 @@ if (tabLoanBtn && tabSavingsBtn) {
 // ---------- 3. LOAN LOGIC ----------
 
 function getInterestMethod() {
-  const selected = document.querySelector('input[name="interestMethod"]:checked');
-  return selected ? selected.value : "reducing";
+  const select = el("interestMethod");
+  return select ? select.value : "reducing";
 }
 
 // Pure math function:
@@ -303,14 +303,14 @@ function calculateSavings() {
 if (el("loanBtn")) el("loanBtn").addEventListener("click", calculateLoan);
 if (el("saveBtn")) el("saveBtn").addEventListener("click", calculateSavings);
 
-// Recalculate automatically when switching interest method if inputs are already filled
-document.querySelectorAll('input[name="interestMethod"]').forEach((radio) => {
-  radio.addEventListener("change", () => {
+// Recalculate automatically when switching interest method if results are already shown
+if (el("interestMethod")) {
+  el("interestMethod").addEventListener("change", () => {
     if (!el("loanResult").hidden) {
       calculateLoan();
     }
   });
-});
+}
 
 // Enable 'Enter' key submission inside inputs
 ["loanAmount", "loanRate", "loanMonths", "feeMgmt", "feeInsurance", "income"].forEach(id => {
@@ -348,9 +348,8 @@ window.addEventListener("DOMContentLoaded", () => {
     el("feeMgmt").value = savedLoan.mgmtPct || "";
     el("feeInsurance").value = savedLoan.insurancePct || "";
     el("income").value = savedLoan.income || "";
-    if (savedLoan.method) {
-      const radio = document.querySelector(`input[name="interestMethod"][value="${savedLoan.method}"]`);
-      if (radio) radio.checked = true;
+    if (savedLoan.method && el("interestMethod")) {
+      el("interestMethod").value = savedLoan.method;
     }
     if (savedLoan.amount && savedLoan.yearlyRate && savedLoan.months) {
       calculateLoan();

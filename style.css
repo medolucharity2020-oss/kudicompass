@@ -405,67 +405,33 @@ input[type="number"] {
   -moz-appearance: textfield;
 }
 
-/* ----- METHOD SELECTOR ----- */
-.method-selector {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 10px;
+/* ----- SELECT INPUT ----- */
+.select-wrapper {
+  position: relative;
 }
 
-.method-option {
-  margin: 0;
+select {
+  width: 100%;
+  padding: 13px 40px 13px 14px;
+  font-family: inherit;
+  font-size: 16px;
+  font-weight: 600;
+  color: var(--text-main);
+  background: transparent;
+  border: none;
+  outline: none;
+  appearance: none;
+  -webkit-appearance: none;
   cursor: pointer;
 }
 
-.method-option input[type="radio"] {
+.select-chevron {
   position: absolute;
-  opacity: 0;
-  width: 0;
-  height: 0;
-  pointer-events: none;
-}
-
-.method-pill {
-  display: flex;
-  flex-direction: column;
-  gap: 2px;
-  padding: 12px 14px;
-  background: var(--surface-alt);
-  border: 1.5px solid var(--border);
-  border-radius: var(--radius-md);
-  transition: var(--transition);
-}
-
-.method-option:hover .method-pill {
-  border-color: #cbd5e1;
-  background: #ffffff;
-}
-
-.method-option input[type="radio"]:focus-visible + .method-pill {
-  box-shadow: 0 0 0 4px rgba(16, 185, 129, 0.15);
-  border-color: var(--border-focus);
-}
-
-.method-option input[type="radio"]:checked + .method-pill {
-  background: var(--primary-50);
-  border-color: var(--primary-700);
-  box-shadow: 0 2px 8px rgba(10, 61, 46, 0.08);
-}
-
-.method-name {
-  font-size: 0.9rem;
-  font-weight: 700;
-  color: var(--text-main);
-}
-
-.method-option input[type="radio"]:checked + .method-pill .method-name {
-  color: var(--primary-900);
-}
-
-.method-hint {
-  font-size: 0.76rem;
-  font-weight: 500;
+  right: 14px;
+  top: 50%;
+  transform: translateY(-50%);
   color: var(--text-muted);
+  pointer-events: none;
 }
 
 /* ----- ACCORDION (Fees) ----- */
@@ -1028,10 +994,6 @@ footer {
   .two-inputs {
     grid-template-columns: 1fr;
     gap: 0;
-  }
-
-  .method-selector {
-    grid-template-columns: 1fr;
   }
 
   .stats-grid {
